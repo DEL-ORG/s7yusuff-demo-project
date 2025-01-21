@@ -12,7 +12,6 @@ provider "aws" {
   region = "us-east-2"
 }
 
-# Local variables for common configurations
 locals {
   aws_region = "us-east-2"
   source_instance_id = "dev-jurist-demo-project-main-server"
