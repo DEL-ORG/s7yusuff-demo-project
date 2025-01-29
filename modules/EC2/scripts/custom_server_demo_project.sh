@@ -29,7 +29,7 @@ install_docker() {
 
   sudo apt-get update -y
 
-  VERSION_STRING="5:26.0.0-1~ubuntu.24.04~noble"
+  VERSION_STRING="5:27.0.1-1~ubuntu.22.04~jammy"
   sudo apt-get install -y docker-ce=$VERSION_STRING docker-ce-cli=$VERSION_STRING containerd.io docker-buildx-plugin docker-compose-plugin
 
   sudo systemctl start docker

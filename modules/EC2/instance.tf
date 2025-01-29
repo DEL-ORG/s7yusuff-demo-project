@@ -33,7 +33,7 @@ resource "aws_instance" "servers" {
   key_name               = var.key_name
   vpc_security_group_ids = [data.aws_security_group.existing_sg.id]
   root_block_device {
-    volume_size =  30
+    volume_size =  var.volume_size
   }
 
 
