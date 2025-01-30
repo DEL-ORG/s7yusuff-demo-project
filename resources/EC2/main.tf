@@ -18,7 +18,7 @@ provider "aws" {
 locals {
   aws_region = "us-east-2"
   instance_type = "t2.medium"
-  volume_size = 30
+  volume_size = 50
 
   common_tags = {
     "id"             = "2024"
