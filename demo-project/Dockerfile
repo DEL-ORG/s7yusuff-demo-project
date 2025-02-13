@@ -1,19 +1,19 @@
-# Use a lightweight image to build the app
-FROM maven:3.8.4-eclipse-temurin-17-alpine AS build
+# Use an official Maven image to build the app
+FROM maven:3.8.4-openjdk-17 AS build
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy pom.xml and download dependencies to cache them in a separate layer
+# Copy the pom.xml file and install dependencies
 COPY pom.xml ./
 RUN mvn dependency:go-offline -B
 
-# Copy the source code and build the application without tests
+# Copy the source code and build the application with debug logging
 COPY src ./src
-RUN mvn package -DskipTests -q
+RUN mvn package -DskipTests -X
 
-# Use a smaller JDK runtime for the final image
-FROM eclipse-temurin:17-jre-alpine
+# Use an official OpenJDK runtime as the base image for running the application
+FROM openjdk:17-jdk-slim
 
 # Set the working directory in the container
 WORKDIR /app
