@@ -2,8 +2,8 @@ app:
   name: demo
 namespace: argocd
 image:
-  repository: thejurist/demo_project
-  tag: V1.0.4
+  repository: thejurist/simplifeed2
+  tag: V1.0.0
 
 replicaCount: 2
 
