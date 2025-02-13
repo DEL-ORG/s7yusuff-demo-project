@@ -14,12 +14,12 @@ provider "aws" {
 }
 
 locals {
-aws_region              = "us-east-2"
-cluster_name            = "dev-jurist-blueops-control-plane"
-eks_version             = 1.31
-endpoint_private_access = false
-endpoint_public_access  = true
-common_tags = {
+  aws_region              = "us-east-2"
+  cluster_name            = "dev-jurist-blueops-control-plane"
+  eks_version             = 1.31
+  endpoint_private_access = true
+  endpoint_public_access  = false
+  common_tags = {
     "id"             = "2024"
     "owner"          = "jurist"
     "environment"    = "dev"
@@ -28,10 +28,10 @@ common_tags = {
     "cloud_provider" = "aws"
     "company"        = "DEL"
   }
-eks_subnet_ids = {
-    us-east-2a = "subnet-0ebbd1751fb00c957"
-    us-east-2b = "subnet-0ffe054defef01d13"
-    us-east-2c = "subnet-0306d57d9ddb7b080"
+  eks_subnet_ids = {
+    us-east-2a = "subnet-0a355d84a4e4bfe4c"
+    us-east-2b = "subnet-0ed04ad98d19f0578"
+    us-east-2c = "subnet-00d462ac31a53945b"
   }
 }
 module "EKS" {

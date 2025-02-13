@@ -33,11 +33,11 @@ resource "aws_instance" "servers" {
   key_name               = var.key_name
   vpc_security_group_ids = [data.aws_security_group.existing_sg.id]
   root_block_device {
-    volume_size =  30
+    volume_size =  var.volume_size
   }
 
 
-  user_data = file("${path.module}/scripts/custom_server_demo_project.sh") 
+  user_data = file("${path.module}/scripts/sonar.sh") 
 
   tags = merge(var.common_tags, {
     Name = format("%s-%s-%s-%s", var.common_tags["environment"], var.common_tags["owner"], var.common_tags["project"],

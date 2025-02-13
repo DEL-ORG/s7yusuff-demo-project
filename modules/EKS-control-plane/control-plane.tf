@@ -7,7 +7,8 @@ resource "aws_eks_cluster" "eks" {
   vpc_config {
     endpoint_private_access = var.endpoint_private_access
     endpoint_public_access  = var.endpoint_public_access
-    subnet_ids              = values(var.eks_subnet_ids)
+    # subnet_ids              = values(var.eks_subnet_ids)
+    subnet_ids              = data.aws_subnets.private.ids
   }
 
   tags = merge(var.common_tags, {

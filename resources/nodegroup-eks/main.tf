@@ -28,7 +28,7 @@ locals {
   blue_node_color           = "blue"
   capacity_type             = "ON_DEMAND"
   ami_type                  = "AL2_x86_64"
-  instance_types            = "t3.small"
+  instance_types            = "t2.medium"
   disk_size                 = "10"
   shared_owned              = "shared"
   enable_cluster_autoscaler = true
@@ -43,9 +43,9 @@ locals {
   }
 
   eks_subnets_ids = {
-    us-east-2a = "subnet-0ebbd1751fb00c957"
-    us-east-2b = "subnet-0ffe054defef01d13"
-    us-east-2c = "subnet-0306d57d9ddb7b080"
+    us-east-2a = "subnet-0a355d84a4e4bfe4c"
+    us-east-2b = "subnet-0ed04ad98d19f0578"
+    us-east-2c = "subnet-00d462ac31a53945b"
   }
 }
 module "Nodegroup" {

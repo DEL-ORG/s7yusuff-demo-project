@@ -1,19 +1,44 @@
-data "aws_ami" "ubuntu" {
-  most_recent = true
+# data "aws_ami" "ubuntu" {
+#   most_recent = true
 
+#   filter {
+#     name   = "name"
+#     values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+#   }
+
+#   filter {
+#     name   = "virtualization-type"
+#     values = ["hvm"]
+#   }
+
+#   owners = ["099720109477"] # Canonical
+# }
+data "aws_subnets" "public" {
   filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+    name   = "tag:Name"
+    values = ["*-public-*"]
   }
-
   filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
+    name   = "tag:environment"
+    values = ["dev"]
   }
-
-  owners = ["099720109477"] # Canonical
+  filter {
+    name   = "availability-zone"
+    values = ["us-east-2a", "us-east-2b", "us-east-2c"]
+  }
 }
 
-# data "aws_ssm_parameter" "ubuntu_ami" {
-#   name = "/aws/service/canonical/ubuntu/eks/20.04/stable/current/arm64/hvm/ebs-gp2/ami-id"
-# }
+data "aws_subnets" "private" {
+  filter {
+    name   = "tag:Name"
+    values = ["*-private-*"]
+  }
+  filter {
+    name   = "tag:environment"
+    values = ["dev"]
+  }
+  filter {
+    name   = "availability-zone"
+    values = ["us-east-2a", "us-east-2b", "us-east-2c"]
+  }
+}

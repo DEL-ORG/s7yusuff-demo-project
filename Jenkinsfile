@@ -44,15 +44,15 @@ pipeline {
             }
         }
 
-        stage('Build and Push Image') {
-            steps {
-                sh """
-                cd ${WORKSPACE}/demo-project
-                docker build -t thejurist/demo_project:${IMAGE_TAG} .
-                docker push thejurist/demo_project:${IMAGE_TAG}
-                """
+            stage('Build and Push Image') {
+                steps {
+                    sh """
+                    cd ${WORKSPACE}/demo-project
+                    docker build -t thejurist/demo_project:${IMAGE_TAG} .
+                    docker push thejurist/demo_project:${IMAGE_TAG}
+                    """
+                }
             }
-        }
 
         stage('Update Image Tag in Helm Repo for ArgoCD') {
             steps {
