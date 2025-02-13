@@ -1,19 +1,28 @@
-name: demo-app
-namespace: s7yusuff
-replicaCount: 2
-
+app:
+  name: demo
+namespace: argocd
 image:
-  repository: thejurist/demo_project
-  pullPolicy: IfNotPresent
+  repository: thejurist/demo-project
   tag: V1.0.5
 
+replicaCount: 2
+
+service:
+  type: ClusterIP
+  port: 8080
+
 ingress:
+  enabled: true
   host: demo.thejurist.org.uk
+  scheme: internet-facing 
+  group: argocd
+  
+javaOpts: "-Xms256m -Xmx512m"
 
-storage:
-  size: 1Gi
-
-hpa:
-  minReplicas: 1
-  maxReplicas: 5
-  targetCPUUtilizationPercentage: 70
+resources:
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+  requests:
+    cpu: "250m"
+    memory: "256Mi"
