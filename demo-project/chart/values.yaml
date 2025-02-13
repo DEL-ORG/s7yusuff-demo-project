@@ -2,8 +2,8 @@ app:
   name: demo
 namespace: argocd
 image:
-  repository: thejurist/demo-project
-  tag: V1.0.5
+  repository: thejurist/demo_project
+  tag: V1.0.4
 
 replicaCount: 2
 
