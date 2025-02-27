@@ -1,5 +1,4 @@
-# cleanup_script.sh
-
+#!/bin/bash
 cleanup_terraform() {
     # Get the root directory of the repository
     REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
@@ -10,15 +9,15 @@ cleanup_terraform() {
     fi
 
     # Directories to search
-    DIRECTORIES=("modules" "resources")
+    DIRECTORIES=("modules"  "resources")
 
     # Loop through each specified directory and clean up Terraform files
     for dir in "${DIRECTORIES[@]}"; do
         if [ -d "$REPO_ROOT/$dir" ]; then
             find "$REPO_ROOT/$dir" -type d -name '.terraform' -exec rm -rf {} +
             find "$REPO_ROOT/$dir" -type f -name 'terraform.tfstate' -exec rm -f {} +
+            find "$REPO_ROOT/$dir" -type f -name 'terraform.tfstate.*' -exec rm -f {} +
             find "$REPO_ROOT/$dir" -type f -name 'terraform.tfstate.backup' -exec rm -f {} +
-            find "$REPO_ROOT/$dir" -type f -name '.terraform.lock.hcl' -exec rm -f {} +
         else
             echo "Directory $REPO_ROOT/$dir does not exist, skipping."
         fi

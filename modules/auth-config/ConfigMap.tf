@@ -66,7 +66,17 @@ resource "kubernetes_config_map" "aws_auth" {
         groups   = ["system:bootstrappers", "system:nodes", "cluster-admin"]
       }
     ])
+        mapUsers = yamlencode([
+      {
+        userarn  = var.user_arn
+        username = var.username  
+        groups   = ["system:masters"] 
+      }
+    ])
   }
+
+
+  
 }
 
 resource "kubernetes_cluster_role_binding" "admin_role_binding" {

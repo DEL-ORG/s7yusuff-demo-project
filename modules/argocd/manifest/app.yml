@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-app
+  namespace: demo-project
+spec:
+  project: default
+  source:
+    repoURL: "https://github.com/DEL-ORG/s7yusuff-demo-project.git" 
+    targetRevision: HEAD
+    path: "chart"
+    helm:
+      valueFiles:
+        - values.yaml 
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo-project
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
