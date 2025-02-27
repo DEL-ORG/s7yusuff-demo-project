@@ -3,8 +3,8 @@ resource "aws_eks_node_group" "nodes-group" {
   node_group_name = format("%s-%s-%s-nodegroup", var.common_tags["environment"], var.common_tags["owner"], var.common_tags["project"])
   node_role_arn   = aws_iam_role.nodes.arn
   version = var.eks_version
-  # subnet_ids = values(var.eks_subnets_ids)
-  subnet_ids              = data.aws_subnets.private.ids
+  subnet_ids = values(var.eks_subnets_ids)
+  # subnet_ids              = data.aws_subnets.private.ids
 
   capacity_type = var.capacity_type
   ami_type      = var.ami_type

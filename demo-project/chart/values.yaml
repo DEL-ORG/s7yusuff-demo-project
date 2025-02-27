@@ -2,13 +2,13 @@ app:
   name: demo
 namespace: argocd
 image:
-  repository: thejurist/demo-project
-  tag: V1.0.5
+  repository: thejurist/demo_project
+  tag: V1.0.1
 
 replicaCount: 2
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 8080
 
 ingress:
@@ -26,5 +26,4 @@ resources:
   requests:
     cpu: "250m"
     memory: "256Mi"
-storage:
-  size: 1Gi
+  

@@ -28,8 +28,8 @@ locals {
   blue_node_color           = "blue"
   capacity_type             = "ON_DEMAND"
   ami_type                  = "AL2_x86_64"
-  instance_types            = "t2.medium"
-  disk_size                 = "10"
+  instance_types            = "t3.medium"
+  disk_size                 = "30"
   shared_owned              = "shared"
   enable_cluster_autoscaler = true
   common_tags = {

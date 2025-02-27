@@ -28,9 +28,8 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
   role       = aws_iam_role.nodes.name
 }
 
-resource "aws_iam_role_policy" "node-group-ClusterAutoscalerPolicy" {
+resource "aws_iam_policy" "node-group-ClusterAutoscalerPolicy" {
   name = format("%s-%s-%s-cluster-auto-scaler-policy", var.common_tags["environment"], var.common_tags["owner"], var.common_tags["project"])
-  role = aws_iam_role.nodes.name
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -51,10 +50,13 @@ resource "aws_iam_role_policy" "node-group-ClusterAutoscalerPolicy" {
     ]
   })
 }
-
-resource "aws_iam_role_policy" "external_dns_policy" {
+resource "aws_iam_role_policy_attachment" "ClusterAutoscalerPolicy" {
+  policy_arn = aws_iam_policy.node-group-ClusterAutoscalerPolicy.arn
+  role       = aws_iam_role.nodes.name
+}
+resource "aws_iam_policy" "external_dns_policy" {
   name = format("%s-%s-%s-external-dns-policy", var.common_tags["environment"], var.common_tags["owner"], var.common_tags["project"])
-  role = aws_iam_role.nodes.name
+  
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -81,5 +83,70 @@ resource "aws_iam_role_policy" "external_dns_policy" {
     ]
   })
 }
+resource "aws_iam_role_policy_attachment" "dns" {
+  policy_arn = aws_iam_policy.external_dns_policy.arn
+  role       = aws_iam_role.nodes.name
+}
+resource "aws_iam_policy" "acm_policy" {
+  name = format("%s-%s-%s-acm-policy", var.common_tags["environment"], var.common_tags["owner"], var.common_tags["project"])
 
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "acm:ListCertificates",
+          "acm:DescribeCertificate",
+          "acm:GetCertificate"
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      }
+    ]
+  })
+}
+resource "aws_iam_role_policy_attachment" "acm" {
+  policy_arn = aws_iam_policy.acm_policy.arn
+  role       = aws_iam_role.nodes.name
+}
 
+resource "aws_iam_role_policy_attachment" "alb_controller" {
+  policy_arn = "arn:aws:iam::494597675232:policy/AWSLoadBalancerControllerIAMPolicy"
+  role       = aws_iam_role.nodes.name
+}
+
+resource "aws_iam_role_policy_attachment" "elb" {
+  policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
+  role       = aws_iam_role.nodes.name
+}
+# resource "aws_iam_policy" "alb_additional_permissions" {
+#   name        = "ALBAdditionalPermissions"
+#   description = "Additional permissions for ALB"
+
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Effect = "Allow"
+#         Action = [
+#           "ec2:DescribeAvailabilityZones",
+#           "ec2:DescribeSubnets",
+#           "elasticloadbalancing:DescribeLoadBalancers",
+#           "elasticloadbalancing:DescribeTargetGroupAttributes",
+#           "elasticloadbalancing:DescribeListeners",
+#           "elasticloadbalancing:DescribeRules",
+#           "elasticloadbalancing:DescribeTags"
+#         ]
+#         Resource = "*"
+#       }
+#     ]
+#   })
+# }
+# resource "aws_iam_role_policy_attachment" "alb_additional" {
+#   policy_arn = aws_iam_policy.alb_additional_permissions.arn
+#   role       = aws_iam_role.nodes.name
+# }
+# resource "aws_iam_role_policy_attachment" "ec2_describe_access" {
+#   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess"
+#   role       = aws_iam_role.nodes.name
+# }

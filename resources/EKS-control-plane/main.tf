@@ -18,7 +18,7 @@ locals {
   cluster_name            = "dev-jurist-blueops-control-plane"
   eks_version             = 1.31
   endpoint_private_access = true
-  endpoint_public_access  = false
+  endpoint_public_access  = true
   common_tags = {
     "id"             = "2024"
     "owner"          = "jurist"

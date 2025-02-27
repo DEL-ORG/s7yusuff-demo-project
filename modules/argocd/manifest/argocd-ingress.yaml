@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress
+  namespace: argocd
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/group.name: argocd-ingress
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: "/"
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    external-dns.alpha.kubernetes.io/hostname: argocd.thejurist.org.uk
+    kubernetes.io/ingress.class: alb
+spec:
+  ingressClassName: alb
+  rules:
+    - host: argocd.thejurist.org.uk
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 443

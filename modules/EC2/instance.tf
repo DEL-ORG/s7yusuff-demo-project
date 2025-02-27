@@ -37,7 +37,7 @@ resource "aws_instance" "servers" {
   }
 
 
-  user_data = file("${path.module}/scripts/sonar.sh") 
+  user_data = file("${path.module}/scripts/custom_server_demo_project.sh") 
 
   tags = merge(var.common_tags, {
     Name = format("%s-%s-%s-%s", var.common_tags["environment"], var.common_tags["owner"], var.common_tags["project"],
